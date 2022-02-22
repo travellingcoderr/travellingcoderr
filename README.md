@@ -1,26 +1,29 @@
+
 ```mermaid
 graph LR
 
-A(Start)
-
-A --> B[Look for an item]
-
-B --> C{Did you find it?}
-C -->|Yes| D(Stop looking)
-C -->|No| E{Do you need it?}
-E -->|Yes| B
-E -->|No| D
+A(AMP Source)
+A --> B[AMP SQS Queue]
+B --> C[AMP Event Worker]
+C -->|Call POQ| D(POQ)
+D -->E{Outcome?}
+E -->|POQ Call Success| F(AMP)
+E -->|POQ Call Failure| G[AMP SQS DLQueue]
+G -->|Re-Process Message| B[AMP SQS Queue]
 ```
 
+
+
 ```mermaid
-sequenceDiagram
-    participant dotcom
-    participant iframe
-    participant viewscreen
-    dotcom->>iframe: loads html w/ iframe url
-    iframe->>viewscreen: request template
-    viewscreen->>iframe: html & javascript
-    iframe->>dotcom: iframe ready
-    dotcom->>iframe: set mermaid data on iframe
-    iframe->>iframe: render mermaid
+graph LR
+
+A(Rocket Logic Docs Source)
+
+A --> B[Process Doc Extraction Event]
+
+B --> C{Event Type?}
+C -->|Complete Event| D(POQ - ISSUE)
+C -->|Issue Event| E(POQ - COMPLETE)
+D -->|Call AMP to Update TI 4728| F(AMP)
+E -->|Create Payoff and save to AMP| F(AMP)
 ```
