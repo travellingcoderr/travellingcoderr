@@ -22,8 +22,8 @@ A(Rocket Logic Docs Source)
 A --> B[Process Doc Extraction Event]
 
 B --> C{Event Type?}
-C -->|Complete Event| D(POQ - ISSUE)
-C -->|Issue Event| E(POQ - COMPLETE)
-D -->|Call AMP to Update TI 4728| F(AMP)
+C -->|Issue Event| D(POQ - ISSUE)
+C -->|Complete Event| E(POQ - COMPLETE)
+D -->|Call AMP to Update TI 4725| F(AMP)
 E -->|Create Payoff and save to AMP| F(AMP)
 ```
