@@ -6,14 +6,14 @@ A -->|Send Message to <br/> API Gateway| B[AMP SQS Queue]
 B -->|Messgae <br />Processed| C[AMP <br /> Event Worker]
 C -->|Calls POQ| D(POQ)
 D -->E{POQ <br /> Outcome?}
-E -->|<br />Successful| F(AMP)
-F -->|Call AMP Endpoint with Results and Exceptions| COMPLETE(<font size=5>COMPLETE)
-E -->|<br />Failure| G[AMP SQS DLQueue]
+E -->|<br />Successful <br /><br /> Call AMP Endpoint with Results and Exceptions| F(AMP)
+F -->|Finalize| COMPLETE(<font size=5>COMPLETE)
+E -->|<br />Failure <br /><br />Re-Process message with Dead Letter Queue| G[AMP SQS DLQueue]
 G -->|Re-Process Message| B[AMP SQS Queue]
 
 %% CSS Styles
 style A fill:#f9f,stroke:#333,stroke-width:4px
-style F fill:#bbf,stroke:#f66,stroke-width:2px
+style F fill:#bbf,stroke:#f66,stroke-width:2px,padding:20px
 style COMPLETE fill:#FF0000,stroke:#f66,stroke-width:2px
 
 %% Set the classes
